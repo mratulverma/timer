@@ -68,6 +68,12 @@ public class Time {
         this.minutes = 0;
         this.seconds = 0;
     }
+    public void resume(){
+    this.hours= this.getHours();
+    this.minutes= this.getMinutes();
+    this.seconds= this.getSeconds();
+
+    }
     public String toString(){
         String hours = (this.hours < 10)? "0"+this.hours : ""+this.hours;
         String minutes = (this.minutes < 10)? "0"+this.minutes : ""+this.minutes;

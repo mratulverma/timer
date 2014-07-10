@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Timer.*;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *
@@ -66,6 +67,11 @@ public class Timer_frame extends javax.swing.JFrame {
         });
 
         lap_Button.setText("Lap");
+        lap_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lap_ButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Global Time :");
 
@@ -132,13 +138,40 @@ public class Timer_frame extends javax.swing.JFrame {
 
     private void stop_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_ButtonActionPerformed
         timer.cancel();
+        globalTime.reset();
+
+
         System.out.println("counter is" + counter);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_stop_ButtonActionPerformed
 
     private void pause_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_ButtonActionPerformed
+        if (pause == false) {
+            timer.cancel();
+            globalTime.getHours();
+            globalTime.getMinutes();
+            globalTime.getSeconds();
+            pause = true;
+        } else if (pause == true) {
+
+
+            globalTime.resume();
+            timer = new Timer();
+            timertask = new MyTimerTask();
+            timer.schedule(timertask,globalTime.getHours()+ globalTime.getMinutes()+  globalTime.getSeconds(), 1000);
+            pause = false;
+        }
     }//GEN-LAST:event_pause_ButtonActionPerformed
+
+    private void lap_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lap_ButtonActionPerformed
+        globalTime.getHours();
+            globalTime.getMinutes();
+            globalTime.getSeconds();
+            System.out.println(globalTime.getHours()+":"+ globalTime.getMinutes()+":" +globalTime.getSeconds());
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lap_ButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,6 +195,7 @@ public class Timer_frame extends javax.swing.JFrame {
     long delay = 10000;
     int counter = 0;
     boolean start = false;
+    boolean pause = false;
     Timer timer;
     TimerTask timertask;
     Time globalTime = new Time();
