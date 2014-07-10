@@ -139,9 +139,10 @@ public class Timer_frame extends javax.swing.JFrame {
     private void stop_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_ButtonActionPerformed
         timer.cancel();
         globalTime.reset();
+        start=false;
 
 
-        System.out.println("counter is" + counter);
+        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_stop_ButtonActionPerformed
