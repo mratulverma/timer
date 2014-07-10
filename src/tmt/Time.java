@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tmt;
 
 /**
@@ -10,6 +9,7 @@ package tmt;
  * @author atul
  */
 public class Time {
+
     private int hours;
     private int minutes;
     private int seconds;
@@ -38,46 +38,49 @@ public class Time {
         this.seconds = seconds;
     }
 
-    public void increment(){
-       incrementSeconds();
+    public void increment() {
+        incrementSeconds();
     }
 
-    private void incrementSeconds(){
-        if(this.seconds == 59){
+    private void incrementSeconds() {
+        if (this.seconds == 59) {
             this.seconds = 0;
             incrementMinutes();
-        }else{
+        } else {
             this.seconds++;
         }
     }
 
-    private void incrementMinutes(){
-        if(this.minutes == 59){
+    private void incrementMinutes() {
+        if (this.minutes == 59) {
             this.minutes = 0;
             incrementHours();
-        }else{
+        } else {
             this.minutes++;
         }
     }
 
-    private void incrementHours(){
+    private void incrementHours() {
         this.hours++;
     }
-    public void reset(){
+
+    public void reset() {
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
     }
-    public void resume(){
-    this.hours= this.getHours();
-    this.minutes= this.getMinutes();
-    this.seconds= this.getSeconds();
+
+    public void resume() {
+        this.hours = this.getHours();
+        this.minutes = this.getMinutes();
+        this.seconds = this.getSeconds();
 
     }
-    public String toString(){
-        String hours = (this.hours < 10)? "0"+this.hours : ""+this.hours;
-        String minutes = (this.minutes < 10)? "0"+this.minutes : ""+this.minutes;
-        String seconds = (this.seconds < 10)? "0"+this.seconds : ""+this.seconds;
+
+    public String toString() {
+        String hours = (this.hours < 10) ? "0" + this.hours : "" + this.hours;
+        String minutes = (this.minutes < 10) ? "0" + this.minutes : "" + this.minutes;
+        String seconds = (this.seconds < 10) ? "0" + this.seconds : "" + this.seconds;
         return hours + ":" + minutes + ":" + seconds;
     }
 }

@@ -10,11 +10,11 @@
  */
 package tmt;
 
-import java.util.Date;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Timer.*;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 
 /**
  *
@@ -159,16 +159,16 @@ public class Timer_frame extends javax.swing.JFrame {
             globalTime.resume();
             timer = new Timer();
             timertask = new MyTimerTask();
-            timer.schedule(timertask,globalTime.getHours()+ globalTime.getMinutes()+  globalTime.getSeconds(), 1000);
+            timer.schedule(timertask, globalTime.getHours() + globalTime.getMinutes() + globalTime.getSeconds(), 1000);
             pause = false;
         }
     }//GEN-LAST:event_pause_ButtonActionPerformed
 
     private void lap_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lap_ButtonActionPerformed
         globalTime.getHours();
-            globalTime.getMinutes();
-            globalTime.getSeconds();
-            System.out.println(globalTime.getHours()+":"+ globalTime.getMinutes()+":" +globalTime.getSeconds());
+        globalTime.getMinutes();
+        globalTime.getSeconds();
+        System.out.println(globalTime.getHours() + ":" + globalTime.getMinutes() + ":" + globalTime.getSeconds());
 
         // TODO add your handling code here:
     }//GEN-LAST:event_lap_ButtonActionPerformed
