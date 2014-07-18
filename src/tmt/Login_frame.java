@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.TimerTask;
 import javax.swing.*;
 
 
@@ -189,6 +190,7 @@ public class Login_frame extends javax.swing.JFrame {
                 //if (login_username.getText().equals(rs.getString("username"))){
                      count=1;
                     System.out.println("Succesfully login :)");
+                    
                 /*}else {
                 System.out.println("Username incorrect");
                 }*/
@@ -240,6 +242,7 @@ public class Login_frame extends javax.swing.JFrame {
     private javax.swing.JPasswordField login_password;
     private javax.swing.JTextField login_username;
     private javax.swing.JButton signup_button;
-    // End of variables declaration
+
+     // End of variables declaration
 
 }

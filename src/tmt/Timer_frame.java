@@ -10,11 +10,12 @@
  */
 package tmt;
 
-
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Timer.*;
-
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 /**
  *
@@ -42,6 +43,12 @@ public class Timer_frame extends javax.swing.JFrame {
         lap_Button = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         GlobalTime_ShowingLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        KeyTime_ShowingLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        ActiveTime_ShowingLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        PassivelTime_ShowingLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,26 +84,51 @@ public class Timer_frame extends javax.swing.JFrame {
 
         GlobalTime_ShowingLabel.setText("00:00:00");
 
+        jLabel2.setText("Key Time :");
+
+        KeyTime_ShowingLabel.setText("00:00:00");
+
+        jLabel4.setText("Active Time :");
+
+        ActiveTime_ShowingLabel.setText("00:00:00");
+
+        jLabel6.setText("Passive Time :");
+
+        PassivelTime_ShowingLabel.setText("00:00:00");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GlobalTime_ShowingLabel))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(start_Button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(stop_Button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pause_Button)
+                        .addComponent(pause_Button))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lap_Button)))
-                .addContainerGap(116, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(KeyTime_ShowingLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(GlobalTime_ShowingLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ActiveTime_ShowingLabel)
+                    .addComponent(lap_Button)
+                    .addComponent(PassivelTime_ShowingLabel))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,8 +136,16 @@ public class Timer_frame extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(GlobalTime_ShowingLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                    .addComponent(GlobalTime_ShowingLabel)
+                    .addComponent(jLabel4)
+                    .addComponent(ActiveTime_ShowingLabel))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(KeyTime_ShowingLabel)
+                    .addComponent(jLabel6)
+                    .addComponent(PassivelTime_ShowingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(start_Button)
                     .addComponent(stop_Button)
@@ -117,7 +157,7 @@ public class Timer_frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void start_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_ButtonActionPerformed
+    private void startTimeLog() {
         if (start == false) {
             if (timer != null) {
                 timer.cancel();
@@ -130,8 +170,22 @@ public class Timer_frame extends javax.swing.JFrame {
         } else if (start == true) {
             start = false;
         }
-        globalTime.reset();
+        if (!globalTime.isEnabled()) {
+            globalTime.setEnabled(true);
+        }
+        if (!activeTime.isEnabled()) {
+            activeTime.setEnabled(true);
+        }
+        if (!keyBoardTime.isEnabled()) {
+            keyBoardTime.setEnabled(true);
+        }
 
+        globalTime.reset();
+    }
+
+    private void start_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_ButtonActionPerformed
+
+        startTimeLog();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_start_ButtonActionPerformed
@@ -139,10 +193,10 @@ public class Timer_frame extends javax.swing.JFrame {
     private void stop_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_ButtonActionPerformed
         timer.cancel();
         globalTime.reset();
-        start=false;
+        start = false;
 
 
-        
+
 
         // TODO add your handling code here:
     }//GEN-LAST:event_stop_ButtonActionPerformed
@@ -175,19 +229,44 @@ public class Timer_frame extends javax.swing.JFrame {
     }//GEN-LAST:event_lap_ButtonActionPerformed
 
     /**
-     * @param args the command line arguments
+     * @param args the command line argumentsh
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+
+                timerMap.put("GLOBAL_TIMER", globalTime);
+                timerMap.put("ACTIVE_TIMER", activeTime);
+                timerMap.put("PASSIVE_TIMER", passiveTime);
+                timerMap.put("KEYBOARD_TIMER", keyBoardTime);
                 new Timer_frame().setVisible(true);
+                try {
+                    GlobalScreen.registerNativeHook();
+                    GlobalScreen globalScreen = GlobalScreen.getInstance();
+                    globalScreen.addNativeKeyListener(new MyKeyListener(keyBoardTime));
+                } catch (NativeHookException ex) {
+                    ex.printStackTrace();
+                }
+                try{
+                    GlobalScreen.registerNativeHook();
+                    GlobalScreen globalScreen =GlobalScreen.getInstance();
+                    globalScreen.addNativeMouseMotionListener(new MyMouseListener(keyBoardTime));
+                } catch (NativeHookException ex){
+                    ex.printStackTrace();
+                }
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ActiveTime_ShowingLabel;
     private javax.swing.JLabel GlobalTime_ShowingLabel;
+    private javax.swing.JLabel KeyTime_ShowingLabel;
+    private javax.swing.JLabel PassivelTime_ShowingLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton lap_Button;
     private javax.swing.JButton pause_Button;
     private javax.swing.JButton start_Button;
@@ -197,20 +276,94 @@ public class Timer_frame extends javax.swing.JFrame {
     int counter = 0;
     boolean start = false;
     boolean pause = false;
+    boolean logic = false;
     Timer timer;
     TimerTask timertask;
-    Time globalTime = new Time();
-    Time activeTime = new Time();
-    Time passiveTime = new Time();
+    static Time globalTime = new Time();
+    static Time activeTime = new Time();
+    static Time passiveTime = new Time();
+    static Time keyBoardTime = new Time();
+    static HashMap timerMap = new HashMap();
+    String previousAppName = null;
 
     class MyTimerTask extends TimerTask {
 
         @Override
         public void run() {
             globalTime.increment();
+            keyBoardTime.increment();
+            activeTime.increment();
+            passiveTime.increment();
+            keyLogic();
+
+            if (activeTime.isEnabled()) {
+
+                String currentAppName = MyWindowName.getCurrentWindowName();
+                if (previousAppName == null) {
+                    previousAppName = currentAppName;
+                }
+                if (!timerMap.containsKey(currentAppName)) {
+                    Time newTime = new Time();
+                    timerMap.put(currentAppName, newTime);
+                    System.out.println("New Timer Created for - " + currentAppName);
+                }
+
+                if (timerMap.containsKey(currentAppName)) {
+                    System.out.println("Timer found for - " + currentAppName);
+
+                    if (!currentAppName.equals(previousAppName)) {
+                        ((Time) timerMap.get(previousAppName)).setEnabled(false);
+                        previousAppName = currentAppName;
+                    }
+
+                    if (!((Time) timerMap.get(currentAppName)).isEnabled()) {
+                        ((Time) timerMap.get(currentAppName)).setEnabled(true);
+                    }
+
+                    ((Time) timerMap.get(currentAppName)).increment();
+                    System.out.println(currentAppName + " - " + timerMap.get(currentAppName));
+                }
+            }
+
 
             GlobalTime_ShowingLabel.setText(globalTime.toString());
+            KeyTime_ShowingLabel.setText(keyBoardTime.toString());
+            ActiveTime_ShowingLabel.setText(activeTime.toString());
+            PassivelTime_ShowingLabel.setText(passiveTime.toString());
+
             //System.out.println("Global Time => " + globalTime.toString());
+        }
+    }
+
+    public void keyLogic() {
+        if (keyBoardTime.getSeconds() == 15) {
+            System.out.println("you are not working");
+
+            activeTime.decrementBy(15);
+
+            passiveTime.incrementBy(15);
+            keyBoardTime.reset();
+            passiveTime.setEnabled(true);
+            activeTime.setEnabled(false);
+            keyBoardTime.setEnabled(false);
+
+        }
+    }
+
+    static public void activateOnKeyPress() {
+        if (!activeTime.isEnabled()) {
+            activeTime.setEnabled(true);
+        }
+        if (passiveTime.isEnabled()) {
+            passiveTime.setEnabled(false);
+        }
+    }
+    static public void activateOnMouseMotion(){
+          if (!activeTime.isEnabled()) {
+            activeTime.setEnabled(true);
+        }
+        if (passiveTime.isEnabled()) {
+            passiveTime.setEnabled(false);
         }
     }
 }
