@@ -19,12 +19,12 @@ import java.lang.Object;
  */
 public class UserName {
 
-    public interface Secur32 extends StdCallLibrary {
+    /*public interface Secur32 extends StdCallLibrary {
 
         Secur32 INSTANCE = (Secur32) Native.loadLibrary("Secur32", Secur32.class);
 
         public boolean GetUserNameEx(int nameFormat, char[] lpNameBuffer, IntByReference len);
-    };
+    };*/
    
 
     public static String getCurrentUserName() {
@@ -34,7 +34,7 @@ public class UserName {
         char[] name = new char[100];
 
 
-        Secur32.INSTANCE.GetUserNameEx(EXTENDED_NAME_FORMAT.NameDisplay, name, len);
+        Secur32.INSTANCE.GetUserNameEx(2, name, len);
 
 
         userName = Native.toString(name);
