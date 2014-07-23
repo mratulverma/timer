@@ -13,7 +13,22 @@ public class Time {
     private int hours;
     private int minutes;
     private int seconds;
-    private boolean enabled = false;
+    public boolean enabled = false;
+
+    public Time() {
+        init();
+    }
+
+    public Time(boolean enabled) {
+        init();
+        this.setEnabled(enabled);
+    }
+
+    private void init() {
+        this.hours = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+    }
 
     public boolean isEnabled() {
         return enabled;
@@ -47,37 +62,38 @@ public class Time {
         this.seconds = seconds;
     }
 
-     public void incrementBy(int seconds){
-         this.seconds = this.seconds + seconds;
-        if(this.seconds >= 60){
-           int incrementvalue= this.seconds - seconds;
-           this.seconds= 0;
-           this.seconds = incrementvalue;
-           this.minutes = this.minutes + 1;
-           if(this.minutes >=60){
-            this.minutes = 0;
-           this.hours= this.hours + 1;
-           }
-       
+    public void incrementBy(int seconds) {
+        this.seconds = this.seconds + seconds;
+        if (this.seconds >= 60) {
+            int incrementvalue = this.seconds - seconds;
+            this.seconds = 0;
+            this.seconds = incrementvalue;
+            this.minutes = this.minutes + 1;
+            if (this.minutes >= 60) {
+                this.minutes = 0;
+                this.hours = this.hours + 1;
+            }
+
+        }
     }
-    }
-    public void decrementBy(int seconds){
-       int tseconds = (this.hours) * 3600 + (this.minutes) * 60 + this.seconds;
-       tseconds = tseconds - seconds ;
-       this.hours = tseconds / 3600;
-       int tminutes= tseconds % 3600 ;
-       this.minutes =tminutes / 60;
-       int tfinalsec = tminutes % 60;
-       this.seconds = tfinalsec ;
+
+    public void decrementBy(int seconds) {
+        int tseconds = (this.hours) * 3600 + (this.minutes) * 60 + this.seconds;
+        tseconds = tseconds - seconds;
+        this.hours = tseconds / 3600;
+        int tminutes = tseconds % 3600;
+        this.minutes = tminutes / 60;
+        int tfinalsec = tminutes % 60;
+        this.seconds = tfinalsec;
 
 
 
     }
 
     public void increment() {
-     if(isEnabled()){
-        incrementSeconds();
-     }
+        if (isEnabled()) {
+            incrementSeconds();
+        }
     }
 
     private void incrementSeconds() {
@@ -102,7 +118,6 @@ public class Time {
     private void incrementHours() {
         this.hours++;
     }
-   
 
     public void reset() {
         this.hours = 0;
@@ -116,7 +131,6 @@ public class Time {
         this.seconds = this.getSeconds();
 
     }
-    
 
     public String toString() {
         String hours = (this.hours < 10) ? "0" + this.hours : "" + this.hours;

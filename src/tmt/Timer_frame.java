@@ -157,43 +157,42 @@ public class Timer_frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startTimeLog() {
-        if (start == false) {
-            if (timer != null) {
-                timer.cancel();
-            }
-            timer = new Timer();
-            timertask = new MyTimerTask();
-            timer.schedule(timertask, 100, 1000);
-            counter++;
-            start = true;
-        } else if (start == true) {
-            start = false;
-        }
-        if (!globalTime.isEnabled()) {
-            globalTime.setEnabled(true);
-        }
-        if (!activeTime.isEnabled()) {
-            activeTime.setEnabled(true);
-        }
-        if (!keyBoardTime.isEnabled()) {
-            keyBoardTime.setEnabled(true);
-        }
-
-        globalTime.reset();
-    }
+//    public void startTimeLog() {
+//        if (start == false) {
+//            if (timer != null) {
+//                timer.cancel();
+//            }
+//            timer = new Timer();
+//           // timertask = new MyTimerTask();
+//            timer.schedule(timertask, 100, 1000);
+//            start = true;
+//        } else if (start == true) {
+//            start = false;
+//        }
+//        if (!globalTime.isEnabled()) {
+//            globalTime.setEnabled(true);
+//        }
+//        if (!activeTime.isEnabled()) {
+//            activeTime.setEnabled(true);
+//        }
+//        if (!keyBoardTime.isEnabled()) {
+//            keyBoardTime.setEnabled(true);
+//        }
+//
+//        //globalTime.reset();
+//    }
 
     private void start_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_ButtonActionPerformed
 
-        startTimeLog();
+     //   startTimeLog();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_start_ButtonActionPerformed
 
     private void stop_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_ButtonActionPerformed
-        timer.cancel();
-        globalTime.reset();
-        start = false;
+//        timer.cancel();
+//        globalTime.reset();
+//        start = false;
 
 
 
@@ -202,59 +201,62 @@ public class Timer_frame extends javax.swing.JFrame {
     }//GEN-LAST:event_stop_ButtonActionPerformed
 
     private void pause_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_ButtonActionPerformed
-        if (pause == false) {
-            timer.cancel();
-            globalTime.getHours();
-            globalTime.getMinutes();
-            globalTime.getSeconds();
-            pause = true;
-        } else if (pause == true) {
-
-
-            globalTime.resume();
-            timer = new Timer();
-            timertask = new MyTimerTask();
-            timer.schedule(timertask, globalTime.getHours() + globalTime.getMinutes() + globalTime.getSeconds(), 1000);
-            pause = false;
-        }
+//        if (pause == false) {
+//            timer.cancel();
+//            globalTime.getHours();
+//            globalTime.getMinutes();
+//            globalTime.getSeconds();
+//            pause = true;
+//        } else if (pause == true) {
+//
+//
+//            globalTime.resume();
+//            timer = new Timer();
+//            //timertask = new MyTimerTask();
+//            timer.schedule(timertask, globalTime.getHours() + globalTime.getMinutes() + globalTime.getSeconds(), 1000);
+//            pause = false;
+//        }
     }//GEN-LAST:event_pause_ButtonActionPerformed
 
     private void lap_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lap_ButtonActionPerformed
-        globalTime.getHours();
-        globalTime.getMinutes();
-        globalTime.getSeconds();
-        System.out.println(globalTime.getHours() + ":" + globalTime.getMinutes() + ":" + globalTime.getSeconds());
-
-        // TODO add your handling code here:
+//        globalTime.getHours();
+//        globalTime.getMinutes();
+//        globalTime.getSeconds();
+//        System.out.println(globalTime.getHours() + ":" + globalTime.getMinutes() + ":" + globalTime.getSeconds());
+//
+//        // TODO add your handling code here:
     }//GEN-LAST:event_lap_ButtonActionPerformed
 
     /**
-     * @param args the command line argumentsh
+     * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
 
-                timerMap.put("GLOBAL_TIMER", globalTime);
-                timerMap.put("ACTIVE_TIMER", activeTime);
-                timerMap.put("PASSIVE_TIMER", passiveTime);
-                timerMap.put("KEYBOARD_TIMER", keyBoardTime);
-                new Timer_frame().setVisible(true);
-                try {
-                    GlobalScreen.registerNativeHook();
-                    GlobalScreen globalScreen = GlobalScreen.getInstance();
-                    globalScreen.addNativeKeyListener(new MyKeyListener(keyBoardTime));
-                } catch (NativeHookException ex) {
-                    ex.printStackTrace();
-                }
-                try{
-                    GlobalScreen.registerNativeHook();
-                    GlobalScreen globalScreen =GlobalScreen.getInstance();
-                    globalScreen.addNativeMouseMotionListener(new MyMouseListener(keyBoardTime));
-                } catch (NativeHookException ex){
-                    ex.printStackTrace();
-                }
+//                new Timer_frame().setVisible(true);
+//
+//
+//                timerMap.put("GLOBAL_TIMER", globalTime);
+//                timerMap.put("ACTIVE_TIMER", activeTime);
+//                timerMap.put("PASSIVE_TIMER", passiveTime);
+//                timerMap.put("KEYBOARD_TIMER", keyBoardTime);
+//
+//
+//                try {
+//                    GlobalScreen.registerNativeHook();
+//                    GlobalScreen globalScreen = GlobalScreen.getInstance();
+//                    globalScreen.addNativeKeyListener(new MyKeyListener(keyBoardTime));
+//                    globalScreen.addNativeMouseMotionListener(new MyMouseListener(keyBoardTime));
+//                } catch (NativeHookException ex) {
+//                    ex.printStackTrace();
+//                }
+
+                TimeTracker.startTimeTracker();
+
+                // Timer Call
+
             }
         });
     }
@@ -277,8 +279,8 @@ public class Timer_frame extends javax.swing.JFrame {
     boolean start = false;
     boolean pause = false;
     boolean logic = false;
-    Timer timer;
-    TimerTask timertask;
+    static Timer timer;
+    static TimerTask timertask;
     static Time globalTime = new Time();
     static Time activeTime = new Time();
     static Time passiveTime = new Time();
@@ -286,84 +288,94 @@ public class Timer_frame extends javax.swing.JFrame {
     static HashMap timerMap = new HashMap();
     String previousAppName = null;
 
-    class MyTimerTask extends TimerTask {
+//    class MyTimerTask extends TimerTask {
+//
+//        @Override
+//        public void run() {
+//            globalTime.increment();
+//            keyBoardTime.increment();
+//            activeTime.increment();
+//            passiveTime.increment();
+//
+//            System.out.println("active time is started" + activeTime.isEnabled());
+//            if (activeTime.isEnabled()) {
+//
+//                String currentAppName = MyWindowName.getCurrentWindowName();
+//                if (previousAppName == null) {
+//                    previousAppName = currentAppName;
+//                }
+//                if (!timerMap.containsKey(currentAppName)) {
+//                    Time newTime = new Time();
+//                    timerMap.put(currentAppName, newTime);
+//                    System.out.println("New Timer Created for - " + currentAppName);
+//                }
+//
+//                if (timerMap.containsKey(currentAppName)) {
+//                    System.out.println("Timer found for - " + currentAppName);
+//
+//                    if (!currentAppName.equals(previousAppName)) {
+//                        ((Time) timerMap.get(previousAppName)).setEnabled(false);
+//                        previousAppName = currentAppName;
+//                    }
+//
+//                    if (!((Time) timerMap.get(currentAppName)).isEnabled()) {
+//                        ((Time) timerMap.get(currentAppName)).setEnabled(true);
+//                    }
+//
+//                    ((Time) timerMap.get(currentAppName)).increment();
+//                    System.out.println(currentAppName + " - " + timerMap.get(currentAppName));
+//                }
+//            }
+//
+//            GlobalTime_ShowingLabel.setText(globalTime.toString());
+//            KeyTime_ShowingLabel.setText(keyBoardTime.toString());
+//            ActiveTime_ShowingLabel.setText(activeTime.toString());
+//            PassivelTime_ShowingLabel.setText(passiveTime.toString());
+//
+//            System.out.println("Global Time => " + globalTime.toString());
+//        }
+//    }
 
-        @Override
-        public void run() {
-            globalTime.increment();
-            keyBoardTime.increment();
-            activeTime.increment();
-            passiveTime.increment();
-            keyLogic();
-
-            if (activeTime.isEnabled()) {
-
-                String currentAppName = MyWindowName.getCurrentWindowName();
-                if (previousAppName == null) {
-                    previousAppName = currentAppName;
-                }
-                if (!timerMap.containsKey(currentAppName)) {
-                    Time newTime = new Time();
-                    timerMap.put(currentAppName, newTime);
-                    System.out.println("New Timer Created for - " + currentAppName);
-                }
-
-                if (timerMap.containsKey(currentAppName)) {
-                    System.out.println("Timer found for - " + currentAppName);
-
-                    if (!currentAppName.equals(previousAppName)) {
-                        ((Time) timerMap.get(previousAppName)).setEnabled(false);
-                        previousAppName = currentAppName;
-                    }
-
-                    if (!((Time) timerMap.get(currentAppName)).isEnabled()) {
-                        ((Time) timerMap.get(currentAppName)).setEnabled(true);
-                    }
-
-                    ((Time) timerMap.get(currentAppName)).increment();
-                    System.out.println(currentAppName + " - " + timerMap.get(currentAppName));
-                }
-            }
-
-
-            GlobalTime_ShowingLabel.setText(globalTime.toString());
-            KeyTime_ShowingLabel.setText(keyBoardTime.toString());
-            ActiveTime_ShowingLabel.setText(activeTime.toString());
-            PassivelTime_ShowingLabel.setText(passiveTime.toString());
-
-            //System.out.println("Global Time => " + globalTime.toString());
-        }
-    }
-
-    public void keyLogic() {
-        if (keyBoardTime.getSeconds() == 15) {
-            System.out.println("you are not working");
-
-            activeTime.decrementBy(15);
-
-            passiveTime.incrementBy(15);
-            keyBoardTime.reset();
-            passiveTime.setEnabled(true);
-            activeTime.setEnabled(false);
-            keyBoardTime.setEnabled(false);
-
-        }
-    }
-
-    static public void activateOnKeyPress() {
-        if (!activeTime.isEnabled()) {
-            activeTime.setEnabled(true);
-        }
-        if (passiveTime.isEnabled()) {
-            passiveTime.setEnabled(false);
-        }
-    }
-    static public void activateOnMouseMotion(){
-          if (!activeTime.isEnabled()) {
-            activeTime.setEnabled(true);
-        }
-        if (passiveTime.isEnabled()) {
-            passiveTime.setEnabled(false);
-        }
-    }
+//    static public void keyLogic() {
+//        if (keyBoardTime.getSeconds() == 15) {
+//            System.out.println("you are not working");
+//
+//            activeTime.decrementBy(15);
+//
+//            passiveTime.incrementBy(15);
+//            keyBoardTime.reset();
+//            passiveTime.setEnabled(true);
+//            activeTime.setEnabled(false);
+//            keyBoardTime.setEnabled(false);
+//
+//        }
+//    }
+//
+//    static public void activateOnFooling() {
+//        if (!passiveTime.isEnabled()) {
+//            passiveTime.setEnabled(true);
+//        }
+//        if (activeTime.isEnabled()) {
+//            activeTime.setEnabled(false);
+//        }
+//
+//    }
+//
+//    static public void activateOnKeyPress() {
+//        if (!activeTime.isEnabled()) {
+//            activeTime.setEnabled(true);
+//        }
+//        if (passiveTime.isEnabled()) {
+//            passiveTime.setEnabled(false);
+//        }
+//    }
+//
+//    static public void activateOnMouseMotion() {
+//        if (!activeTime.isEnabled()) {
+//            activeTime.setEnabled(true);
+//        }
+//        if (passiveTime.isEnabled()) {
+//            passiveTime.setEnabled(false);
+//        }
+ //  }
 }
