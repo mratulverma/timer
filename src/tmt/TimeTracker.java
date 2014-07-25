@@ -4,6 +4,9 @@
  */
 package tmt;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,12 +43,15 @@ public class TimeTracker {
                 globalScreen.addNativeKeyListener(new MyKeyListener(getTimeByKey(KEYBOARD_MOUSE_TIME)));
                 globalScreen.addNativeMouseMotionListener(new MyMouseListener(getTimeByKey(KEYBOARD_MOUSE_TIME)));
                 String userName = UserName.getCurrentUserName();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                System.out.println(dateFormat.format(date));
             } catch (NativeHookException ex) {
                 System.out.println("Failed to register Keyboard & Mouse Listeners");
                 ex.printStackTrace();
             }
         } else {
-           //throw new TimeTrackerRunningException();
+            //throw new TimeTrackerRunningException();
         }
     }
 
@@ -79,7 +85,7 @@ public class TimeTracker {
 
     private static void handleApplicationTime() {
         if (getTimeByKey(ACTIVE_TIME).isEnabled()) {
-             currentAppName = MyWindowName.getCurrentWindowName();
+            currentAppName = MyWindowName.getCurrentWindowName();
             if (previousAppName == null) {
                 previousAppName = currentAppName;
             }

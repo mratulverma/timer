@@ -9,15 +9,18 @@ import com.sun.jna.Native;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.platform.win32.Secur32;
 import com.sun.jna.platform.win32.Secur32.EXTENDED_NAME_FORMAT;
+import com.sun.jna.platform.win32.WinBase;
 import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.win32.StdCallLibrary;
 import java.lang.Object;
+
 
 /**
  *
  * @author atul
  */
 public class UserName {
+
 
     /*public interface Secur32 extends StdCallLibrary {
 
@@ -43,4 +46,5 @@ public class UserName {
 
         return userName;
     }
+
 }
