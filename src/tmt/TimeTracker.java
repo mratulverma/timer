@@ -4,6 +4,10 @@
  */
 package tmt;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,10 +36,12 @@ public class TimeTracker {
     private static TimerTask timerTask;
     private static String previousAppName = null;
     private static String currentAppName;
+    private static InetAddress ip;
 
-    public static void startTimeTracker() {
+    public static void startTimeTracker() throws SocketException, UnknownHostException {
         if (!tracking) {
             tracking = true;
+            
             try {
                 GlobalScreen.registerNativeHook();
                 GlobalScreen globalScreen = GlobalScreen.getInstance();
@@ -43,12 +49,28 @@ public class TimeTracker {
                 globalScreen.addNativeKeyListener(new MyKeyListener(getTimeByKey(KEYBOARD_MOUSE_TIME)));
                 globalScreen.addNativeMouseMotionListener(new MyMouseListener(getTimeByKey(KEYBOARD_MOUSE_TIME)));
                 String userName = UserName.getCurrentUserName();
+                ip = InetAddress.getLocalHost();
+		System.out.println("Current IP address : " + ip.getHostAddress());
+ 
+		NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+ 
+		byte[] mac = network.getHardwareAddress();
+ 
+		System.out.print("Current MAC address : ");
+ 
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < mac.length; i++) {
+			sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+		}
+		System.out.println(sb.toString());
+            
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 System.out.println(dateFormat.format(date));
             } catch (NativeHookException ex) {
                 System.out.println("Failed to register Keyboard & Mouse Listeners");
                 ex.printStackTrace();
+                
             }
         } else {
             //throw new TimeTrackerRunningException();

@@ -10,10 +10,14 @@
  */
 package tmt;
 
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Timer.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -235,7 +239,8 @@ public class Timer_frame extends javax.swing.JFrame {
 
             public void run() {
 
-//                new Timer_frame().setVisible(true);
+                try {
+                    //                new Timer_frame().setVisible(true);
 //
 //
 //                timerMap.put("GLOBAL_TIMER", globalTime);
@@ -252,10 +257,15 @@ public class Timer_frame extends javax.swing.JFrame {
 //                } catch (NativeHookException ex) {
 //                    ex.printStackTrace();
 //                }
-
-                TimeTracker.startTimeTracker();
-
-                // Timer Call
+                    
+                    TimeTracker.startTimeTracker();
+                    
+                    // Timer Call
+                } catch (SocketException ex) {
+                    Logger.getLogger(Timer_frame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(Timer_frame.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         });
